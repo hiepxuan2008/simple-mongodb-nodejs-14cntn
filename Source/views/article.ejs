@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MeanJS</title>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <nav id="header" class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/"><img src="/images/logo.png" id="logo"></a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="#">Chat</a></li>
+                        <li><a href="#">Services</a></li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div><!--/.container-fluid -->
+        </nav>
+
+        <div id="article-content">
+            <h2><%= article.title %></h2>
+            <div class="container" id="image-title">
+                <img src="<%= article.thumbnail %>" alt="image">
+            </div>
+            <div class="summary">
+                <p><%= article.summary %></p>
+            </div>
+
+            <div class="description">
+                <p><%= article.description %></p>
+            </div>
+        </div>
+
+        <div id="add-comment">
+            <form action="/comments" method="post" data-toggle="validator" id="form-comment-ajax" onsubmit="return postComment();">
+                <div class="form-group">
+                    <textarea class="form-control" id="newComment" required="required" placeholder="Add a comment"></textarea>
+                </div>
+                <input id="articleID" name="articleID" value="<%= article.id %>" type="hidden">
+                <button type="submit" class="btn btn-primary">Post</button>
+            </form>
+        </div>
+
+        <div id="alert-message">
+
+        </div>
+
+        <div id="comments">
+
+        </div>
+
+        <hr>
+        <div id="footer">
+            <span>Copyright &copy; 2017 by Group 03 - PTUDW CNTN2014</span>
+            <div>Group Intro: <a target="_blank" href="https://hiepxuan2008.github.io/webdev-14cntn/intro/">https://hiepxuan2008.github.io/webdev-14cntn/intro/</a></div>
+        </div>
+    </div>
+	<script src="/js/jquery.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+    <script src="/js/article.js"></script>
+</body>
+</html>

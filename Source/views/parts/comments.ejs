@@ -1,0 +1,69 @@
+<h3>Comments (<%- total %>)</h3>
+<ul class="comments">
+    <% comments.forEach(function(comment){ %>
+    <li class="comment">
+        <div class="comment-avatar">
+            <img src="/images/NinjaAvatar.png" class="avatar">
+        </div>
+        <div class="comment-body">
+            <div class="comment-header">
+                <a href="#" class="author"><%- comment.username %></a>
+                <a href="#" title="<%- comment.createdAt.toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' }) %>"><span class="time"><%- comment.createdAtTimeAgo %></span></a>
+                <a href="#" class="btn btn-delete text-danger" title="Delete this comment" onclick="event.preventDefault(); deleteComment('<%- comment._id %>')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+            </div>
+            <div class="comment-content">
+                <%- comment.comment %>
+            </div>
+        </div>
+    </li>
+    <% }); %>
+</ul>
+
+
+
+<div class="pagination-wrapper">
+    <div class="page-limit-wrapper pull-left">
+        <span>Display
+            <select id="page-limit" name="page-limit" class="page-limit" title="limit comments per page" onchange="changeCommentDisplayLimitPerPage()">
+                <option value="2" <%= limit == 2 ? 'selected' : ''%>>2</option>
+                <option value="5" <%= limit == 5 ? 'selected' : ''%>>5</option>
+                <option value="10" <%= limit == 10 ? 'selected' : ''%>>10</option>
+            </select>
+            results per page
+        </span>
+    </div>
+    <input id="offset" value="<%= offset %>" type="hidden">
+
+    <nav aria-label="Page navigation" class="text-center">
+        <ul class="pagination">
+            <% noPage = Math.ceil(total/limit) %>
+            <% activePage = offset/limit+1 %>
+            <% var visiblePage = 7; %>
+            <% for( var i = 1; i <= noPage; i++) {%>
+                <% if (i == 1 || i == noPage) { %>
+                    <li <%- (i == activePage) ? 'class="active"' : ''; %>><a href="#" class="page-num" onclick="event.preventDefault(); gotoPage(<%= (i-1)*limit %>)"><%= i %></a></li>
+                <% } else if (activePage < visiblePage-2) { %>
+                    <% if ( i < visiblePage-1 ) { %>
+                        <li <%- (i == activePage) ? 'class="active"' : ''; %>><a href="#" class="page-num" onclick="event.preventDefault(); gotoPage(<%= (i-1)*limit %>)"><%= i %></a></li>
+                    <% } else if (i == noPage-1) { %>
+                        <li><a href="#" onclick="event.preventDefault();">...</a></li>
+                    <% } %>
+                <% } else if (activePage > noPage - visiblePage+3) { %>
+                    <% if ( i > noPage - visiblePage+2 ) { %>
+                        <li <%- (i == activePage) ? 'class="active"' : ''; %>><a href="#" class="page-num" onclick="event.preventDefault(); gotoPage(<%= (i-1)*limit %>)"><%= i %></a></li>
+                    <% } else if (i == 2) { %>
+                        <li><a href="#" onclick="event.preventDefault();">...</a></li>
+                    <% } %>
+                <% } else { %>
+                    <% if ( i == 2) { %>
+                        <li><a href="#" onclick="event.preventDefault();">...</a></li>
+                    <% } else if ( Math.abs(activePage-i) < visiblePage/2-1 ) { %>
+                        <li <%- (i == activePage) ? 'class="active"' : ''; %>><a href="#" class="page-num" onclick="event.preventDefault(); gotoPage(<%= (i-1)*limit %>)"><%= i %></a></li>
+                    <% } else if ( i == noPage - 1) { %>
+                        <li><a href="#" onclick="event.preventDefault();">...</a></li>
+                     <% } %>
+                <% } %>
+            <% } %>
+        </ul>
+    </nav>
+</div>
